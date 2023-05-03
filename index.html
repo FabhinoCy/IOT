@@ -28,14 +28,14 @@
 <script>
     const url = "http://193.168.146.106/iot/get-distance.php";
 
-    setInterval(() => { // Utilisation de setInterval pour exécuter la requête fetch toutes les secondes
+    setInterval(() => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 const distanceSpan = document.querySelector("#bulle span");
                 distanceSpan.innerText = data[0].distance;
                 const tableBody = document.getElementById("table-body");
-                tableBody.innerHTML = ''; // Nettoyage du contenu de la table avant l'ajout des nouvelles données
+                tableBody.innerHTML = '';
                 data.reverse().forEach(item => {
                     if (item.id !== "1" && item.distance !== "") {
                         const row = tableBody.insertRow();
