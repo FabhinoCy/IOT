@@ -9,7 +9,8 @@
 <h1>Application Distance</h1>
 
 <div id="bulle">
-    <span>0</span>
+    <span class="test">0</span>
+    <span class="toto">cm</span>
 </div>
 
 <div id="data">
@@ -32,7 +33,7 @@
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                const distanceSpan = document.querySelector("#bulle span");
+                const distanceSpan = document.querySelector("#bulle span.test");
                 distanceSpan.innerText = data[0].distance;
                 const tableBody = document.getElementById("table-body");
                 tableBody.innerHTML = '';
