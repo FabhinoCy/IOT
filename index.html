@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Titre de la page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Application Distance</h1>
+
+<div id="bulle">
+    <span>0</span>
+</div>
+
+<div id="data">
+    <table>
+        <thead>
+            <tr>
+                <th>Distance (cm)</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const url = "http://193.168.146.106/iot/get-distance.php";
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById("table-body");
+            data.forEach(item => {
+                console.log(item);
+                const row = tableBody.insertRow();
+                const distanceCell = row.insertCell(0);
+                const dateCell = row.insertCell(1);
+                distanceCell.innerText = item.distance;
+                dateCell.innerText = item.created_at;
+            });
+            const distanceSpan = document.querySelector("#bulle span");
+            distanceSpan.innerText = data[0].distance;
+        })
+        .catch(error => console.log(error));
+</script>
+</body>
+</html>
