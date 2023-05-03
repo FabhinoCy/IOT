@@ -28,22 +28,26 @@
 <script>
     const url = "http://193.168.146.106/iot/get-distance.php";
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.getElementById("table-body");
-            data.forEach(item => {
-                console.log(item);
-                const row = tableBody.insertRow();
-                const distanceCell = row.insertCell(0);
-                const dateCell = row.insertCell(1);
-                distanceCell.innerText = item.distance;
-                dateCell.innerText = item.created_at;
-            });
-            const distanceSpan = document.querySelector("#bulle span");
-            distanceSpan.innerText = data[0].distance;
-        })
-        .catch(error => console.log(error));
+    setInterval(() => { // Utilisation de setInterval pour exécuter la requête fetch toutes les secondes
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const distanceSpan = document.querySelector("#bulle span");
+                distanceSpan.innerText = data[0].distance;
+                const tableBody = document.getElementById("table-body");
+                tableBody.innerHTML = ''; // Nettoyage du contenu de la table avant l'ajout des nouvelles données
+                data.reverse().forEach(item => {
+                    if (item.id !== "1" && item.distance !== "") {
+                        const row = tableBody.insertRow();
+                        const distanceCell = row.insertCell(0);
+                        const dateCell = row.insertCell(1);
+                        distanceCell.innerText = item.distance;
+                        dateCell.innerText = item.created_at;
+                    }
+                });
+            })
+            .catch(error => console.log(error));
+    }, 1000);
 </script>
 </body>
 </html>
